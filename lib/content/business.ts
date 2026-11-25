@@ -18,6 +18,7 @@ export type BusinessProfile = {
     readonly postalCode: string;
     readonly countryCode: 'IN';
     readonly mapsUrl: string;
+    readonly embedUrl: string;
   };
   readonly hours: {
     readonly display: string;
@@ -76,6 +77,8 @@ export const BUSINESS_PROFILE: BusinessProfile = {
     countryCode: 'IN',
     mapsUrl:
       'https://maps.google.com/?q=PN92A%2C+2nd+Floor%2C+Madangir+Police+Station%2C+Lal+Bahadur+Shastri+Marg%2C+Madangir%2C+Delhi+110062',
+    embedUrl:
+      'https://maps.google.com/maps?q=PN92A%2C+2nd+Floor%2C+Madangir+Police+Station%2C+Lal+Bahadur+Shastri+Marg%2C+Madangir%2C+Delhi+110062&z=16&output=embed',
   },
   hours: {
     display: '7:00 am – 11:45 pm',

@@ -100,6 +100,35 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <section className="section section-muted" aria-labelledby="office-map-heading">
+        <div className="container">
+          <div className="section-header">
+            <div>
+              <div className="eyebrow">
+                <span className="eyebrow-rule" />
+                Location Map
+              </div>
+              <h2 id="office-map-heading">
+                Visit our Madangir,
+                <br />
+                <em>Delhi office.</em>
+              </h2>
+            </div>
+            <p>{BUSINESS_PROFILE.address.full}</p>
+          </div>
+
+          <div className="contact-map-frame">
+            <iframe
+              title="Google Map showing eDataXpress office in Madangir, Delhi"
+              src={BUSINESS_PROFILE.address.embedUrl}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
     </>
   );
 }

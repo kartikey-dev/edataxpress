@@ -31,6 +31,8 @@ describe('Business profile & confirmed facts', () => {
     expect(BUSINESS_PROFILE.country).toBe('India');
     expect(BUSINESS_PROFILE.address.postalCode).toBe('110062');
     expect(BUSINESS_PROFILE.address.full).toContain('Madangir');
+    expect(BUSINESS_PROFILE.address.embedUrl).toContain('output=embed');
+    expect(BUSINESS_PROFILE.address.embedUrl).toContain('Madangir');
     expect(BUSINESS_PROFILE.hours.display).toBe('7:00 am – 11:45 pm');
     expect(BUSINESS_PROFILE.contactChannels.email).toBe('enquiry@edataxpress.com');
     expect(BUSINESS_PROFILE.coFounder.name).toBe('Ayan Sarkar');

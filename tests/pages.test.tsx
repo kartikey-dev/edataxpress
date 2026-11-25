@@ -91,11 +91,14 @@ describe('App Router Server Component pages', () => {
 
     const { unmount: unmountContact } = render(<ContactPage />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Tell us what you are/i);
-    expect(screen.getByText(/Madangir, Delhi/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Madangir, Delhi/i).length).toBeGreaterThanOrEqual(2);
     expect(screen.getByRole('link', { name: /enquiry@edataxpress\.com/i })).toHaveAttribute(
       'href',
       'mailto:enquiry@edataxpress.com',
     );
+    const mapFrame = screen.getByTitle(/Google Map showing eDataXpress office/i);
+    expect(mapFrame).toHaveAttribute('loading', 'lazy');
+    expect(mapFrame.getAttribute('src')).toContain('output=embed');
     unmountContact();
 
     render(<NotFoundPage />);
