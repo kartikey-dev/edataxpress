@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
+import { buildSitemapEntries } from '@/lib/content';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://www.edataxpress.com';
-  return ['', '/about', '/contact', '/services/publishing', '/services/printing', '/services/marketing'].map((path) => ({ url: `${base}${path}`, changeFrequency: 'monthly', priority: path === '' ? 1 : 0.7 }));
+  return buildSitemapEntries();
 }

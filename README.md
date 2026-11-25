@@ -1,44 +1,35 @@
-# eDataXpress website
+# eDataXpress Website
 
-A responsive Next.js App Router website for eDataXpress, with dedicated pages for its publishing, printing and marketing services. Route content is rendered by Next.js server components; client JavaScript is limited to the mobile menu and contact form.
+A fast, accessible, book-inspired Next.js App Router B2B portfolio for **eDataXpress** (_Connecting Businesses Globally_), covering **Publication**, **Printing Solutions**, **Digital Studio Setup** (including an **Interactive Flat Panel 65-Inch** detail page), and **Digital Marketing**.
 
-## Run locally
+## Architecture & Key Paths
 
-Requires Node.js 20 or newer and pnpm.
+- `app/`: Next.js App Router pages, layout (`next/font` self-hosted `DM_Sans` & `Playfair_Display`), `globals.css` design tokens, `robots.ts`, `sitemap.ts`, `not-found.tsx`, and `api/enquiry/route.ts`
+- `components/`: shared `SiteHeader`, `SiteFooter`, `Breadcrumbs`, `ServicePage`, `ProductDetailView`, and accessible `EnquiryForm`
+- `lib/content/`: typed single source of truth (`business.ts`, `services.ts`, `products.ts`, `navigation.ts`, `seo.ts`)
+- `lib/enquiry.ts`: server/client payload validation, honeypot spam mitigation, and rate limiting
+- `public/`: `assets/edataxpress-logo-transparent.png`, `assets/cofounder-ayan-sarkar.jpg`, `assets/favicon.png`, WebP imagery, and `llms.txt`
+- `tests/`: Vitest + Testing Library unit/component/API tests
+- `docs/`: implementation plan, IA, design system, content validation rules, QA/TDD, SEO, and Sonar guides
+- `sonar-project.properties`: SonarQube/SonarCloud configuration (`coverage/lcov.info`)
 
-Development writes its cache to `.next-dev`; production builds use `.next` so the two modes do not overwrite one another.
+## Local Development & Quality Gates
 
-```sh
+Requires Node.js 20+ and `pnpm`.
+
+```bash
 pnpm install
 pnpm dev
 ```
 
-The local server runs at `http://localhost:3000`. To create and serve a production build:
+Quality checks:
 
-```sh
+```bash
+pnpm format:check
+pnpm lint
+pnpm typecheck
+pnpm test:coverage
 pnpm build
-pnpm start
 ```
 
-The site uses Next.js App Router, TypeScript, React server components and shared CSS. The contact form prepares an email in the visitor’s configured email app, without assuming a business email address; connect a form provider or backend endpoint to receive enquiries directly.
-
-## Structure
-
-- `app/`: route pages, global layout, metadata, sitemap and robots rules
-- `components/`: shared site header, footer, service pages and contact form
-- `app/globals.css`: shared design system and responsive styles
-- `public/robots.txt`, `app/sitemap.ts`, `public/llms.txt`: crawler discovery and GEO context
-- `sonar-project.properties`: SonarQube/SonarCloud scanner settings
-- `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`: project guidance for coding agents
-
-## Search and GEO
-
-The pages include descriptive titles and summaries, canonical URLs, Open Graph metadata, crawlable internal links, and structured business data on the home page. `llms.txt` gives AI answer engines a concise overview and links to authoritative pages. Keep business facts consistent across these files and external listings. Before launch, confirm the production canonical domain, configure Search Console and Bing Webmaster Tools, and submit the sitemap.
-
-## Sonar analysis
-
-Install or configure SonarScanner in your environment, set the project key and host/token as needed, then run `sonar-scanner`. This repo includes a baseline Sonar project configuration and excludes generated dependencies/build output. Configure secrets through environment variables or your CI secret store; do not commit tokens.
-
-## Business details
-
-The supplied brief is treated as the source of truth for the establishment year (2017), address, hours, services and co-founder link. External directory descriptions can change and should be reviewed periodically.
+Configure optional environment variables in `.env.local` based on `.env.example` (`NEXT_PUBLIC_SITE_URL`, `CONTACT_API_URL`, `CONTACT_API_KEY`, `SONAR_HOST_URL`, `SONAR_TOKEN`). Never commit secrets.

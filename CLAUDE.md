@@ -1,3 +1,5 @@
-# Claude project guidance
+# Claude project instructions
 
-Read [AGENTS.md](./AGENTS.md) before making changes. Keep pages server-rendered and fast, retain accessible responsive behavior, and keep search metadata, structured data, sitemap, robots.txt and llms.txt in sync. Use only confirmed business facts; do not invent claims or testimonials. Use pnpm and follow README.md.
+Follow [AGENTS.md](./AGENTS.md) as the primary engineering contract and [GEMINI.md](./GEMINI.md) for project context. Read the implementation, architecture, content, design, QA, and SEO documents under `docs/` before making changes.
+
+Do not invent business claims, product specifications, or unconfirmed contact details. Use TDD, keep server rendering as the default, optimize all imagery (WebP for photos/products, transparent PNG/SVG for logo), and complete lint, typecheck, test, build, and Sonar gates.

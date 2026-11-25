@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
+import { buildRobotsConfig } from '@/lib/content';
 
 export default function robots(): MetadataRoute.Robots {
-  return { rules: { userAgent: '*', allow: '/' }, sitemap: 'https://www.edataxpress.com/sitemap.xml' };
+  return buildRobotsConfig();
 }

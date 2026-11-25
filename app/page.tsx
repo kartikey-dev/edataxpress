@@ -1,25 +1,308 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpeningScreen } from '@/components/book-opening-screen';
+import {
+  BUSINESS_PROFILE,
+  SERVICES,
+  buildLocalBusinessJsonLd,
+  getProductBySlug,
+} from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'eDataXpress — Ideas, printed beautifully',
-  description: 'From first draft to final delivery, eDataXpress brings publishing, print production and book marketing together in Madangir, Delhi.',
+  title: `${BUSINESS_PROFILE.name} — Publication, Printing, Digital Studio Setup & Marketing`,
+  description:
+    'Delhi-based B2B partner for Publication, Printing Solutions, Digital Studio Setup (including Interactive Flat Panel 65-inch), and Digital Marketing.',
   alternates: { canonical: '/' },
-  openGraph: { title: 'eDataXpress — Ideas, printed beautifully', description: 'Publishing, print production and book marketing, all under one roof.', url: '/' },
+  openGraph: {
+    title: `${BUSINESS_PROFILE.name} — ${BUSINESS_PROFILE.tagline}`,
+    description:
+      'Publication, Printing Solutions, Digital Studio Setup, and Digital Marketing in Delhi, India.',
+    url: '/',
+  },
 };
 
-const business = { '@context': 'https://schema.org', '@type': 'LocalBusiness', name: 'eDataXpress', url: 'https://www.edataxpress.com/', foundingDate: '2017', address: { '@type': 'PostalAddress', streetAddress: 'PN92A, 2nd Floor, Madangir Police Station, Lal Bahadur Shastri Marg, Madangir', addressLocality: 'Delhi', postalCode: '110062', addressCountry: 'IN' }, openingHours: 'Mo-Su 07:00-23:45', sameAs: ['https://in.linkedin.com/company/edataxpress', 'https://x.com/edataxpress', 'https://www.justdial.com/Delhi/EDATAXPRESS-NEET-PUBLICATION-Madangir-Police-Station-Madangir/011PXX11-XX11-240712163111-E8C8_BZDET', 'https://internshala.com/company/edataxpress-1645567516/'] };
-
 export default function HomePage() {
-  return <>
-    <BookOpeningScreen />
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }}/>
-    <section className="hero"><div className="hero-copy"><div className="eyebrow"><span/>PUBLISHING · PRINTING · BOOK MARKETING</div><h1>From first draft<br/>to <em>finished book.</em></h1><p>We bring the people, print craft and publishing know-how behind a book you’ll be proud to put into readers’ hands.</p><div className="hero-actions"><Link className="button button-dark" href="/services/publishing">Explore our services <span>↗</span></Link><Link className="text-link" href="/about">Meet the team <span>→</span></Link></div><div className="hero-proof"><div className="avatars"><span>01</span><span>02</span><span>03</span></div><p><strong>One joined-up process.</strong><br/>Editorial to finished print.</p></div></div><div className="hero-art"><Image className="hero-photo" src="/images/publishing-studio.webp" alt="An editor reviewing printed page proofs and books in a publishing studio" fill priority sizes="(max-width: 680px) 100vw, 52vw"/><div className="hero-photo-label"><span>THE BOOKMAKING PROCESS</span><b>From page proof<br/>to finished copy <i>↗</i></b></div></div></section>
-    <section className="trust-strip"><span>YOUR IDEA, IN GOOD COMPANY</span><div><b>01</b> A clear path from concept</div><div><b>02</b> Craft at every step</div><div><b>03</b> A launch that goes further</div></section>
-    <section className="section services-section"><div className="section-heading"><div><div className="eyebrow">The work we bring together</div><h2>One book.<br/><em>Many careful hands.</em></h2></div><p>See how publishing, print production and promotion work together from the first proof to the first reader.</p></div><div className="service-grid"><Link className="service-card card-publish" href="/services/publishing"><div className="card-top"><span>01 / PUBLISHING</span><span className="arrow">↗</span></div><div className="service-photo"><Image src="/images/publishing-studio.webp" alt="Editor reviewing manuscript and page proofs" fill sizes="(max-width: 680px) 90vw, 30vw"/></div><h3>Shape the<br/>story.</h3><p>Editorial direction, design and publishing support from manuscript onward.</p><span className="card-link">Discover publishing <b>→</b></span></Link><Link className="service-card card-print" href="/services/printing"><div className="card-top"><span>02 / PRINTING</span><span className="arrow">↗</span></div><div className="service-photo"><Image src="/images/print-production.webp" alt="Printed sheets moving through a book printing press" fill sizes="(max-width: 680px) 90vw, 30vw"/></div><h3>Print with<br/>precision.</h3><p>Paper, press and finishing details that make a book feel right.</p><span className="card-link">Discover printing <b>→</b></span></Link><Link className="service-card card-market" href="/services/marketing"><div className="card-top"><span>03 / MARKETING</span><span className="arrow">↗</span></div><div className="service-photo"><Image src="/images/book-marketing.webp" alt="Publishing team planning a book marketing campaign" fill sizes="(max-width: 680px) 90vw, 30vw"/></div><h3>Reach the<br/>right readers.</h3><p>Thoughtful campaigns that help books travel beyond the print run.</p><span className="card-link">Discover marketing <b>→</b></span></Link></div></section>
-    <section className="manifesto"><div className="manifesto-art"><div className="open-book"><span/><span/><b>EVERY<br/>GREAT BOOK<br/>STARTS<br/><em>SOMEWHERE.</em></b></div><span className="scribble">✳</span></div><div className="manifesto-copy"><div className="eyebrow">A little about us</div><h2>We believe the world still needs <em>more good books.</em></h2><p>Founded in 2017, eDataXpress brings creative thinking and practical know-how to publishing, printing and marketing. We make the process clearer, the craft stronger and the final book something to be proud of.</p><Link className="text-link" href="/about">Our story <span>→</span></Link><div className="since"><strong>2017</strong><span>Independent minds.<br/>One shared love of print.</span></div></div></section>
-    <section className="quote-band"><span>THE RIGHT PEOPLE. THE RIGHT PROCESS.</span><p>“From the first page<br/>to the <em>first reader.</em>”</p><Link href="/contact">Let’s make something good <span>↗</span></Link></section><section className="bottom-cta"><div><div className="eyebrow">Have a book in mind?</div><h2>Let’s get it<br/><em>out into the world.</em></h2></div><Link className="button button-cream" href="/contact">Start a conversation <span>↗</span></Link><span className="cta-flower">✳</span></section>
-  </>;
+  const localBusinessJsonLd = buildLocalBusinessJsonLd();
+  const ifpProduct = getProductBySlug('interactive-flat-panel-65');
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
+
+      <section className="hero">
+        <div className="container hero-grid">
+          <div>
+            <div className="eyebrow">
+              <span className="eyebrow-rule" />
+              PUBLICATION · PRINTING · DIGITAL STUDIO · MARKETING
+            </div>
+            <h1>
+              Crafted for print.
+              <br />
+              Built for <em>modern rooms.</em>
+            </h1>
+            <p className="lead">
+              {BUSINESS_PROFILE.name} partners with institutions, publishers, and organizations in{' '}
+              {BUSINESS_PROFILE.city} across four connected pillars: Publication, Printing
+              Solutions, Digital Studio Setup, and Digital Marketing.
+            </p>
+            <div className="hero-actions">
+              <Link className="button button-primary" href="/services">
+                Explore services <span aria-hidden="true">↗</span>
+              </Link>
+              <Link className="text-link" href="/contact">
+                Discuss a project <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+            <div className="hero-meta">
+              <div>
+                <strong>Est. {BUSINESS_PROFILE.foundedYear}</strong>
+                {BUSINESS_PROFILE.city}, {BUSINESS_PROFILE.country}
+              </div>
+              <div>
+                <strong>Open Daily</strong>
+                {BUSINESS_PROFILE.hours.display}
+              </div>
+              <div>
+                <strong>{BUSINESS_PROFILE.tagline}</strong>
+                B2B editorial, print &amp; studio solutions
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-media">
+            <Image
+              src="/images/publishing-studio.webp"
+              alt="Publishing specialist reviewing printed page proofs and editorial layouts"
+              fill
+              priority
+              sizes="(max-width: 820px) 100vw, 46vw"
+            />
+            <div className="hero-media-overlay">
+              <div>
+                <span>EDITION ONE · DELHI</span>
+                <br />
+                <strong>From manuscript &amp; print to interactive classrooms</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="folio-strip" aria-label="Core business pillars">
+        <div className="container folio-strip-inner">
+          <span className="folio-strip-label">FOUR INTEGRATED CHAPTERS</span>
+          <div>
+            <b>01</b> Editorial &amp; Print Production
+          </div>
+          <div>
+            <b>02</b> Digital Studio &amp; 65&quot; Display Setup
+          </div>
+          <div>
+            <b>03</b> Audience &amp; Campaign Outreach
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-header">
+            <div>
+              <div className="eyebrow">
+                <span className="eyebrow-rule" />
+                Service Chapters
+              </div>
+              <h2>
+                Four pillars under
+                <br />
+                <em>one practical roof.</em>
+              </h2>
+            </div>
+            <p>
+              Each service operates with clear scope, verified specifications, and direct
+              coordination from initial brief through delivery.
+            </p>
+          </div>
+
+          <div className="pillar-grid">
+            {SERVICES.map((service) => (
+              <Link key={service.slug} className="pillar-card" href={`/services/${service.slug}`}>
+                <div className="pillar-card-top">
+                  <span>
+                    {service.chapter} / {service.shortLabel}
+                  </span>
+                  <span className="pillar-card-arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </div>
+                <div className="pillar-card-media">
+                  <Image
+                    src={service.image.src}
+                    alt={service.image.alt}
+                    fill
+                    sizes="(max-width: 580px) 92vw, (max-width: 1024px) 46vw, 23vw"
+                  />
+                </div>
+                <h3>{service.title}</h3>
+                <p>{service.summary}</p>
+                <span className="pillar-card-link">
+                  Explore chapter <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-muted">
+        <div className="container studio-spotlight">
+          <div>
+            <div className="eyebrow">
+              <span className="eyebrow-rule" />
+              Featured Solution · Chapter 03
+            </div>
+            <h2>
+              Digital Studio Setup &amp;
+              <br />
+              <em>Interactive Displays.</em>
+            </h2>
+            <p className="lead">
+              For schools, coaching institutes, and corporate training rooms, we plan interactive
+              display rooms and recording environments tailored to room layout and usage goals.
+            </p>
+            <ul className="studio-feature-list">
+              <li>
+                <strong>Interactive Classrooms</strong>
+                Planned around teacher sightlines and mounting geometry.
+              </li>
+              <li>
+                <strong>Training Studios</strong>
+                Coordinated display, audio, camera, and lighting workflows.
+              </li>
+              <li>
+                <strong>Hybrid Meeting Rooms</strong>
+                Structured setup for collaborative presentations and workshops.
+              </li>
+              <li>
+                <strong>Site-Specific Quotes</strong>
+                Commercial proposals prepared from confirmed room needs.
+              </li>
+            </ul>
+            <div className="hero-actions">
+              <Link className="button button-primary" href="/services/digital-studio-setup">
+                Explore Digital Studio Setup <span aria-hidden="true">↗</span>
+              </Link>
+              <Link className="text-link" href="/contact?service=digital-studio-setup">
+                Request room consultation <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+
+          {ifpProduct ? (
+            <div className="studio-panel-card">
+              <div className="studio-panel-image">
+                <Image
+                  src={ifpProduct.images[0].src}
+                  alt={ifpProduct.images[0].alt}
+                  fill
+                  sizes="(max-width: 820px) 92vw, 38vw"
+                />
+              </div>
+              <div className="eyebrow">Featured Hardware Solution</div>
+              <h3>{ifpProduct.title}</h3>
+              <p>{ifpProduct.summary}</p>
+              <div className="hero-actions">
+                <Link className="button button-secondary" href={`/products/${ifpProduct.slug}`}>
+                  View 65&quot; panel details <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container split-grid">
+          <div className="bookplate">
+            <div className="eyebrow">
+              <span className="eyebrow-rule" />
+              Editorial Discipline
+            </div>
+            <h2>
+              Clarity before production.
+              <br />
+              <em>Care in delivery.</em>
+            </h2>
+            <p className="lead">
+              Whether preparing a multi-chapter textbook, coordinating a print run, or setting up an
+              interactive teaching studio, we document specifications clearly before execution.
+            </p>
+            <div className="bookplate-rule">
+              <strong>Est. {BUSINESS_PROFILE.foundedYear}</strong>
+              <span>
+                Independent B2B partner in {BUSINESS_PROFILE.city}, {BUSINESS_PROFILE.country}
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <div className="eyebrow">
+              <span className="eyebrow-rule" />
+              How We Work
+            </div>
+            <h2>
+              Structured from first brief
+              <br />
+              <em>to handover.</em>
+            </h2>
+            <div className="faq-list">
+              <article className="faq-item">
+                <h3>01 · Scope &amp; Assessment</h3>
+                <p>
+                  We clarify publication format, print specifications, studio room requirements, or
+                  campaign objectives before quoting.
+                </p>
+              </article>
+              <article className="faq-item">
+                <h3>02 · Documented Proposal</h3>
+                <p>
+                  Share clear deliverables, approved hardware datasheets, and schedules suited to
+                  your institution or organization.
+                </p>
+              </article>
+              <article className="faq-item">
+                <h3>03 · Coordinated Execution</h3>
+                <p>
+                  Move smoothly from proofs, print runs, or room setup to final delivery and team
+                  handover.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bottom-cta">
+        <div className="container bottom-cta-inner">
+          <div>
+            <div className="eyebrow">
+              <span className="eyebrow-rule" />
+              Start a conversation
+            </div>
+            <h2>
+              Planning a publication, print run,
+              <br />
+              or <em>digital studio?</em>
+            </h2>
+          </div>
+          <Link className="button button-paper" href="/contact">
+            Discuss your project <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+      </section>
+    </>
+  );
 }

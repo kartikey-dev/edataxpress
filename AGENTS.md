@@ -1,20 +1,40 @@
-# Agent instructions
+# Agent instructions — eDataXpress
 
-## Project
-- Build a fast, accessible, mobile-first Next.js App Router site for eDataXpress.
-- Prefer server components and semantic HTML. Use client components only for interactions that need browser state.
-- Keep route content and metadata crawlable without client-side rendering.
-- Preserve the book publishing, printing studio and independent bookstore visual direction.
+## Mission
 
-## Quality
-- Use descriptive page titles, meta descriptions, canonical URLs and accessible labels.
-- Keep motion subtle and respect `prefers-reduced-motion`.
-- Do not invent testimonials, guarantees, contact details or service claims. Treat user-provided business facts as authoritative.
-- Keep sitemap, robots, llms.txt, structured data and internal links aligned when routes change.
-- Keep dependencies minimal and never commit secrets or generated build artifacts.
+Build and maintain a fast, accessible, search-friendly, book-inspired B2B website for eDataXpress, a Delhi-based business offering Publication, Printing Solutions, Digital Studio Setup, and Digital Marketing (including an Interactive Flat Panel 65-inch product detail page).
 
-## Commands
-- `pnpm dev`: local development
-- `pnpm build`: production build
-- `pnpm start`: serve the production build
-- SonarScanner configuration lives in `sonar-project.properties`.
+## Before coding
+
+1. Read `README.md` and all files in `docs/`.
+2. Inspect the current codebase, package scripts, routes, dependencies, and existing tests.
+3. Preserve useful working code and existing conventions unless the implementation plan explicitly calls for a justified change.
+4. Keep confirmed owner facts authoritative and never fill unconfirmed gaps with invented claims.
+
+## Owner-confirmed facts (from repo brief & owner confirmation)
+
+- Brand: eDataXpress ("Connecting Businesses Globally")
+- Established: 2017
+- Address: PN92A, 2nd Floor, Madangir Police Station, Lal Bahadur Shastri Marg, Madangir, Delhi–110062, India
+- Hours: 7:00 am – 11:45 pm daily
+- Co-founder: Ayan Sarkar (`https://in.linkedin.com/in/dmayan`)
+- Still pending owner confirmation: official email, phone/WhatsApp, canonical production domain verification, and exact IFP 65-inch brand/model/SKU/datasheet/pricing/warranty.
+
+## Architecture
+
+- Next.js App Router + TypeScript + pnpm; prefer Server Components and semantic HTML. Use Client Components only for browser-dependent interaction.
+- Keep content, navigation, metadata, product data, and contact configuration in typed data modules (`lib/content/`).
+- Use `next/image` with WebP for photography/product imagery and preserve transparency for the logo (`public/assets/edataxpress-logo-transparent.png`).
+- Generate route metadata, canonical URLs, sitemap, robots, `llms.txt`, and JSON-LD from verified business data.
+
+## Design direction
+
+- Premium editorial/book-inspired B2B portfolio ("The Business Book"): warm paper surfaces, deep charcoal ink, restrained logo-red accents, serif display typography, and legible sans-serif body typography.
+- Respect `prefers-reduced-motion` and keep motion subtle and purposeful.
+
+## Quality gates & commands
+
+- TDD: write/adjust tests before implementing behaviour; add regression tests for defects.
+- `pnpm dev` / `pnpm build` / `pnpm start`: Next.js dev, production build, and serve.
+- `pnpm lint` / `pnpm typecheck` / `pnpm test` / `pnpm test:coverage` / `pnpm format:check`: quality gates.
+- SonarScanner configuration lives in `sonar-project.properties`. Never commit secrets, tokens, or generated build artifacts.

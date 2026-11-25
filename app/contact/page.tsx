@@ -1,13 +1,96 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { ContactForm } from '@/components/contact-form';
+import { Suspense } from 'react';
+import { Breadcrumbs } from '@/components/breadcrumbs';
+import { EnquiryForm } from '@/components/enquiry-form';
+import { BUSINESS_PROFILE, buildBreadcrumbJsonLd } from '@/lib/content';
 
-export const metadata: Metadata = { title: 'Contact eDataXpress — Delhi Publishing & Printing', description: 'Contact eDataXpress about publishing, printing or marketing. Visit our Madangir, Delhi studio, open daily 7:00 am to 11:45 pm.', alternates: { canonical: '/contact' }, openGraph: { title: 'Contact eDataXpress', description: 'Tell us about your book project. We’re in Madangir, Delhi.' } };
+export const metadata: Metadata = {
+  title: `Contact ${BUSINESS_PROFILE.name} — Delhi Publishing, Printing & Digital Studio Setup`,
+  description: `Contact ${BUSINESS_PROFILE.name} in Madangir, Delhi for Publication, Printing Solutions, Digital Studio Setup, Interactive Flat Panel 65-inch quotes, or Digital Marketing.`,
+  alternates: { canonical: '/contact' },
+  openGraph: {
+    title: `Contact ${BUSINESS_PROFILE.name}`,
+    description: `Start a project or request a Digital Studio Setup consultation in Delhi.`,
+    url: '/contact',
+  },
+};
 
 export default function ContactPage() {
-  return <>
-    <section className="contact-hero"><div className="eyebrow">Your next chapter starts here</div><h1>Tell us what<br/>you’re <em>imagining.</em></h1><p>A book in progress, a print project taking shape or a question about what we do? We’d love to hear about it.</p></section>
-    <section className="contact-grid"><div className="contact-card"><div className="eyebrow">Find us in Delhi</div><h2>Come say<br/><em>hello.</em></h2><address>PN92A, 2nd Floor,<br/>Madangir Police Station,<br/>Lal Bahadur Shastri Marg,<br/>Madangir, Delhi–110062</address><a className="text-link" target="_blank" rel="noopener noreferrer" href="https://maps.google.com/?q=PN92A%2C+2nd+Floor%2C+Madangir+Police+Station%2C+Lal+Bahadur+Shastri+Marg%2C+Madangir%2C+Delhi+110062">Get directions <span>↗</span></a><div className="contact-hours"><span>OPEN EVERY DAY</span><strong>7:00 am – 11:45 pm</strong></div></div><div className="contact-form-wrap"><div className="eyebrow">A note is a good beginning</div><h2>Let’s talk <em>books.</em></h2><ContactForm/></div></section>
-    <section className="social-proof"><span>FIND US AROUND THE WEB</span><a href="https://in.linkedin.com/company/edataxpress" target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a><a href="https://x.com/edataxpress" target="_blank" rel="noopener noreferrer">X <span>↗</span></a><a href="https://www.justdial.com/Delhi/EDATAXPRESS-NEET-PUBLICATION-Madangir-Police-Station-Madangir/011PXX11-XX11-240712163111-E8C8_BZDET" target="_blank" rel="noopener noreferrer">Justdial <span>↗</span></a><a href="https://internshala.com/company/edataxpress-1645567516/" target="_blank" rel="noopener noreferrer">Internshala <span>↗</span></a></section>
-  </>;
+  const breadcrumbs = [
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact' },
+  ];
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(breadcrumbs);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
+      <section className="page-hero">
+        <div className="container">
+          <Breadcrumbs items={breadcrumbs} />
+          <div className="eyebrow">
+            <span className="eyebrow-rule" />
+            Enquiries &amp; Location
+          </div>
+          <h1>
+            Tell us what you are
+            <br />
+            <em>planning next.</em>
+          </h1>
+          <p className="lead">
+            Whether scoping a publication, print production run, 65-inch Interactive Flat Panel room
+            setup, or digital marketing campaign, share a few details below.
+          </p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container contact-grid">
+          <aside className="contact-card">
+            <div className="eyebrow">
+              <span className="eyebrow-rule" />
+              Find Us in {BUSINESS_PROFILE.city}
+            </div>
+            <h2>Studio &amp; Office</h2>
+            <address>
+              {BUSINESS_PROFILE.address.lines.map((line) => (
+                <span key={line}>
+                  {line}
+                  <br />
+                </span>
+              ))}
+            </address>
+            <a
+              className="text-link"
+              href={BUSINESS_PROFILE.address.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get directions on Maps <span aria-hidden="true">↗</span>
+            </a>
+
+            <div className="contact-hours">
+              <span>OPEN EVERY DAY</span>
+              <strong>{BUSINESS_PROFILE.hours.display}</strong>
+            </div>
+          </aside>
+
+          <div className="enquiry-panel">
+            <div className="eyebrow">
+              <span className="eyebrow-rule" />
+              Project &amp; Product Enquiry
+            </div>
+            <h2>Request a quote or consultation.</h2>
+            <Suspense fallback={<p>Loading enquiry form...</p>}>
+              <EnquiryForm />
+            </Suspense>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }

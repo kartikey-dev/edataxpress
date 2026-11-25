@@ -1,17 +1,23 @@
 import type { NextConfig } from 'next';
+import { LEGACY_REDIRECTS } from './lib/content/navigation';
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
-  // Keep `next dev` artifacts separate so a production build cannot replace
-  // chunks that a running development server still has in memory.
   distDir: process.env.NODE_ENV === 'development' ? '.next-dev' : '.next',
   async redirects() {
+    return [...LEGACY_REDIRECTS];
+  },
+  async headers() {
     return [
-      { source: '/index.html', destination: '/', permanent: true },
-      { source: '/about.html', destination: '/about', permanent: true },
-      { source: '/contact.html', destination: '/contact', permanent: true },
-      { source: '/services/:service.html', destination: '/services/:service', permanent: true },
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
     ];
   },
 };
