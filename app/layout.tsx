@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { DM_Sans, Playfair_Display } from 'next/font/google';
 import './globals.css';
@@ -20,6 +20,13 @@ const playfairDisplay = Playfair_Display({
   variable: '--font-serif',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#f7f4ee',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
