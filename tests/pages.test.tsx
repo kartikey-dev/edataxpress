@@ -9,6 +9,8 @@ import DigitalStudioSetupPage from '@/app/services/digital-studio-setup/page';
 import DigitalMarketingPage from '@/app/services/digital-marketing/page';
 import InteractiveFlatPanel65Page from '@/app/products/interactive-flat-panel-65/page';
 import ContactPage from '@/app/contact/page';
+import PrivacyPolicyPage from '@/app/privacy-policy/page';
+import TermsPage from '@/app/terms/page';
 import NotFoundPage from '@/app/not-found';
 
 vi.mock('next/navigation', () => ({
@@ -104,5 +106,19 @@ describe('App Router Server Component pages', () => {
     render(<NotFoundPage />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/not be/i);
     expect(screen.getByRole('link', { name: /Return home/i })).toHaveAttribute('href', '/');
+  });
+
+  it('renders PrivacyPolicyPage and TermsPage with verified governance details', () => {
+    const { unmount: unmountPrivacy } = render(<PrivacyPolicyPage />);
+    expect(screen.getByRole('heading', { level: 1, name: 'Privacy Policy' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /enquiry@edataxpress\.com/i })).toHaveAttribute(
+      'href',
+      'mailto:enquiry@edataxpress.com',
+    );
+    unmountPrivacy();
+
+    render(<TermsPage />);
+    expect(screen.getByRole('heading', { level: 1, name: 'Terms of Use' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Contact page/i })).toHaveAttribute('href', '/contact');
   });
 });

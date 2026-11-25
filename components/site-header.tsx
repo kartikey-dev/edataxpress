@@ -3,18 +3,27 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { BUSINESS_PROFILE, PRIMARY_NAV, SERVICE_NAV_ITEMS } from '@/lib/content';
+import { useEffect, useRef, useState, type FocusEvent } from 'react';
+import { BUSINESS_PROFILE, PRIMARY_NAV, SERVICES, PRODUCTS } from '@/lib/content';
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<number | undefined>(undefined);
+
+  function clearCloseTimer() {
+    if (closeTimerRef.current !== undefined) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = undefined;
+    }
+  }
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
+        clearCloseTimer();
         setMenuOpen(false);
         setServicesOpen(false);
       }
@@ -26,6 +35,7 @@ export function SiteHeader() {
         event.target instanceof Node &&
         !dropdownRef.current.contains(event.target)
       ) {
+        clearCloseTimer();
         setServicesOpen(false);
       }
     }
@@ -33,14 +43,49 @@ export function SiteHeader() {
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('mousedown', handlePointerDown);
     return () => {
+      clearCloseTimer();
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousedown', handlePointerDown);
     };
   }, []);
 
   function closeAllMenus() {
+    clearCloseTimer();
     setMenuOpen(false);
     setServicesOpen(false);
+  }
+
+  function handleDropdownMouseEnter() {
+    clearCloseTimer();
+    if (!menuOpen) {
+      setServicesOpen(true);
+    }
+  }
+
+  function handleDropdownMouseLeave() {
+    if (menuOpen) return;
+    clearCloseTimer();
+    closeTimerRef.current = window.setTimeout(() => {
+      setServicesOpen(false);
+    }, 150);
+  }
+
+  function handleDropdownBlur(event: FocusEvent<HTMLDivElement>) {
+    if (
+      dropdownRef.current &&
+      event.relatedTarget instanceof Node &&
+      !dropdownRef.current.contains(event.relatedTarget)
+    ) {
+      setServicesOpen(false);
+    }
+  }
+
+  function handleMobileToggle() {
+    setMenuOpen((prev) => {
+      const next = !prev;
+      setServicesOpen(next);
+      return next;
+    });
   }
 
   return (
@@ -62,7 +107,7 @@ export function SiteHeader() {
           className="menu-toggle"
           aria-expanded={menuOpen}
           aria-controls="primary-nav"
-          onClick={() => setMenuOpen((prev) => !prev)}
+          onClick={handleMobileToggle}
         >
           <span>Menu</span>
           <span aria-hidden="true">{menuOpen ? '✕' : '☰'}</span>
@@ -79,19 +124,24 @@ export function SiteHeader() {
                   key={item.href}
                   ref={dropdownRef}
                   className="nav-dropdown"
-                  onMouseLeave={() => setServicesOpen(false)}
+                  onMouseEnter={handleDropdownMouseEnter}
+                  onMouseLeave={handleDropdownMouseLeave}
+                  onBlur={handleDropdownBlur}
                 >
                   <button
                     type="button"
                     className={`nav-dropdown-trigger${isServicesActive ? ' nav-link-active' : ''}`}
                     aria-expanded={servicesOpen}
                     aria-controls="services-submenu"
-                    onClick={() => setServicesOpen((prev) => !prev)}
+                    onClick={() => {
+                      clearCloseTimer();
+                      setServicesOpen((prev) => !prev);
+                    }}
                   >
                     <span>Services</span>
                     <span aria-hidden="true">{servicesOpen ? '▴' : '▾'}</span>
                   </button>
-                  {(servicesOpen || menuOpen) && (
+                  {servicesOpen && (
                     <div id="services-submenu" className="nav-dropdown-panel">
                       <Link
                         href="/services"
@@ -101,26 +151,33 @@ export function SiteHeader() {
                         All Services Overview
                       </Link>
                       <div className="nav-dropdown-divider" />
-                      {SERVICE_NAV_ITEMS.map((service) => (
+                      {SERVICES.map((service) => (
                         <Link
-                          key={service.href}
-                          href={service.href}
-                          aria-current={pathname === service.href ? 'page' : undefined}
+                          key={service.slug}
+                          href={`/services/${service.slug}`}
+                          aria-current={
+                            pathname === `/services/${service.slug}` ? 'page' : undefined
+                          }
                           onClick={closeAllMenus}
                         >
-                          {service.label}
+                          <span className="nav-dropdown-chapter">{service.chapter}</span>
+                          <span>{service.title}</span>
                         </Link>
                       ))}
                       <div className="nav-dropdown-divider" />
-                      <Link
-                        href="/products/interactive-flat-panel-65"
-                        aria-current={
-                          pathname === '/products/interactive-flat-panel-65' ? 'page' : undefined
-                        }
-                        onClick={closeAllMenus}
-                      >
-                        Interactive Flat Panel 65&quot;
-                      </Link>
+                      {PRODUCTS.map((product) => (
+                        <Link
+                          key={product.slug}
+                          href={`/products/${product.slug}`}
+                          aria-current={
+                            pathname === `/products/${product.slug}` ? 'page' : undefined
+                          }
+                          onClick={closeAllMenus}
+                        >
+                          <span className="nav-dropdown-chapter">IFP</span>
+                          <span>{product.shortLabel}</span>
+                        </Link>
+                      ))}
                     </div>
                   )}
                 </div>

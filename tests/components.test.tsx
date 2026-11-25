@@ -32,8 +32,17 @@ describe('SiteHeader & SiteFooter', () => {
     expect(servicesButton).toHaveAttribute('aria-expanded', 'false');
     fireEvent.click(servicesButton);
     expect(servicesButton).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.getByRole('link', { name: /All Services Overview/i })).toBeInTheDocument();
 
+    const studioLink = screen.getByRole('link', { name: /Digital Studio Setup/i });
+    expect(studioLink).toHaveAttribute('href', '/services/digital-studio-setup');
+    fireEvent.mouseLeave(servicesButton.closest('.nav-dropdown')!);
+    expect(servicesButton).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.click(studioLink);
+    expect(servicesButton).toHaveAttribute('aria-expanded', 'false');
+
+    fireEvent.mouseEnter(servicesButton.closest('.nav-dropdown')!);
+    expect(servicesButton).toHaveAttribute('aria-expanded', 'true');
     fireEvent.mouseDown(document.body);
     expect(servicesButton).toHaveAttribute('aria-expanded', 'false');
   });

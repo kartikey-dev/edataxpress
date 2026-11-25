@@ -106,6 +106,8 @@ export function buildLlmsText(siteUrl = getSiteUrl()): string {
     ...serviceLines,
     ...productLines,
     `- Contact and location: ${siteUrl}/contact`,
+    `- Privacy Policy: ${siteUrl}/privacy-policy`,
+    `- Terms of Use: ${siteUrl}/terms`,
     '',
     '## Business facts',
     `- Email: ${BUSINESS_PROFILE.contactChannels.email}`,

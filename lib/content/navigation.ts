@@ -23,6 +23,8 @@ export const PRIMARY_NAV: readonly NavItem[] = [
   { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
   { label: 'Contact', href: '/contact' },
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Use', href: '/terms' },
 ];
 
 export const SERVICE_NAV_ITEMS: readonly NavItem[] = SERVICES.map((service) => ({
@@ -39,6 +41,8 @@ export const FOOTER_LINKS: readonly NavItem[] = [
     href: `/products/${product.slug}`,
   })),
   { label: 'Contact', href: '/contact' },
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Use', href: '/terms' },
 ];
 
 export const LEGACY_REDIRECTS: readonly RedirectRule[] = [
@@ -76,4 +80,6 @@ export const INDEXABLE_ROUTES: readonly IndexableRoute[] = [
     priority: 0.85,
   })),
   { path: '/contact', changeFrequency: 'monthly', priority: 0.75 },
+  { path: '/privacy-policy', changeFrequency: 'monthly', priority: 0.3 },
+  { path: '/terms', changeFrequency: 'monthly', priority: 0.3 },
 ];

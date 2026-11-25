@@ -114,6 +114,8 @@ describe('Navigation, redirects, and SEO generators', () => {
     expect(FOOTER_LINKS.some((link) => link.href === '/products/interactive-flat-panel-65')).toBe(
       true,
     );
+    expect(FOOTER_LINKS.some((link) => link.href === '/privacy-policy')).toBe(true);
+    expect(FOOTER_LINKS.some((link) => link.href === '/terms')).toBe(true);
 
     expect(LEGACY_REDIRECTS).toEqual(
       expect.arrayContaining([

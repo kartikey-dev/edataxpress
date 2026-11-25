@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { PRODUCTS, SERVICES } from '@/lib/content';
 import { validateEnquiryPayload, type EnquiryServiceOption } from '@/lib/enquiry';
@@ -297,7 +298,14 @@ export function EnquiryForm({
             aria-invalid={Boolean(errors.consent)}
             aria-describedby={errors.consent ? 'error-consent' : undefined}
           />
-          <span>I consent to eDataXpress using these details solely to respond to my enquiry.</span>
+          <span>
+            I consent to eDataXpress using these details solely to respond to my enquiry, as
+            described in our{' '}
+            <Link className="text-link" href="/privacy-policy">
+              Privacy Policy
+            </Link>
+            .
+          </span>
         </label>
         {errors.consent ? (
           <p className="field-error" id="error-consent">
