@@ -68,7 +68,7 @@ describe('App Router Server Component pages', () => {
       screen.getByRole('heading', { level: 1, name: 'Digital Studio Setup' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('heading', { level: 3, name: 'Interactive Classroom' }),
+      screen.getByRole('heading', { level: 3, name: 'Interactive Classroom Layout' }),
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /View Interactive Flat Panel 65/i })).toHaveAttribute(
       'href',
@@ -92,6 +92,10 @@ describe('App Router Server Component pages', () => {
     const { unmount: unmountContact } = render(<ContactPage />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Tell us what you are/i);
     expect(screen.getByText(/Madangir, Delhi/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /enquiry@edataxpress\.com/i })).toHaveAttribute(
+      'href',
+      'mailto:enquiry@edataxpress.com',
+    );
     unmountContact();
 
     render(<NotFoundPage />);

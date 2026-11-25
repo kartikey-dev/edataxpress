@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { ChapterGraphic } from '@/components/chapter-graphic';
 import { SERVICES, buildBreadcrumbJsonLd, getProductBySlug } from '@/lib/content';
 
 export const metadata: Metadata = {
@@ -74,6 +75,7 @@ export default function ServicesOverviewPage() {
               </div>
               <h3>{service.title}</h3>
               <p>{service.summary}</p>
+              <ChapterGraphic slug={service.slug} />
               <span className="pillar-card-link">
                 View {service.shortLabel} <span aria-hidden="true">→</span>
               </span>

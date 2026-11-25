@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { Breadcrumbs } from './breadcrumbs';
+import { ChapterGraphic } from './chapter-graphic';
 import {
   buildBreadcrumbJsonLd,
   buildServiceJsonLd,
@@ -40,7 +41,7 @@ export function ServicePage({
 
       <section className="page-hero">
         <div className="container page-hero-grid">
-          <div>
+          <div className="hero-animate">
             <Breadcrumbs items={breadcrumbs} />
             <div className="eyebrow">
               <span className="eyebrow-rule" />
@@ -48,6 +49,7 @@ export function ServicePage({
             </div>
             <h1>{service.title}</h1>
             <p className="lead">{service.intro}</p>
+            <ChapterGraphic slug={service.slug} />
             <div className="hero-actions">
               <Link className="button button-primary" href={`/contact?service=${service.slug}`}>
                 {service.ctaLabel} <span aria-hidden="true">↗</span>
@@ -58,7 +60,7 @@ export function ServicePage({
             </div>
           </div>
 
-          <div className="page-hero-media">
+          <div className="page-hero-media hero-animate hero-animate-delay">
             <Image
               src={service.image.src}
               alt={service.image.alt}

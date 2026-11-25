@@ -15,6 +15,7 @@ export function buildLocalBusinessJsonLd(siteUrl = getSiteUrl()) {
     '@type': 'LocalBusiness',
     name: BUSINESS_PROFILE.name,
     description: `${BUSINESS_PROFILE.name} — ${BUSINESS_PROFILE.tagline}. Publication, Printing Solutions, Digital Studio Setup, and Digital Marketing in Delhi, India.`,
+    email: BUSINESS_PROFILE.contactChannels.email,
     url: `${siteUrl}/`,
     foundingDate: String(BUSINESS_PROFILE.foundedYear),
     address: {
@@ -107,6 +108,7 @@ export function buildLlmsText(siteUrl = getSiteUrl()): string {
     `- Contact and location: ${siteUrl}/contact`,
     '',
     '## Business facts',
+    `- Email: ${BUSINESS_PROFILE.contactChannels.email}`,
     `- Address: ${BUSINESS_PROFILE.address.full}`,
     `- Hours provided by the business: ${BUSINESS_PROFILE.hours.display} daily.`,
     `- Established: ${BUSINESS_PROFILE.foundedYear}.`,

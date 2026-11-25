@@ -33,6 +33,10 @@ export function SiteFooter() {
             {BUSINESS_PROFILE.foundedYear}
           </span>
           <span>
+            <a href={`mailto:${BUSINESS_PROFILE.contactChannels.email}`}>
+              {BUSINESS_PROFILE.contactChannels.email}
+            </a>{' '}
+            ·{' '}
             <a
               href={BUSINESS_PROFILE.social.linkedinCompany}
               target="_blank"

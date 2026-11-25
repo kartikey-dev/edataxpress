@@ -804,6 +804,11 @@ p {
   align-items: start;
 }
 
+.product-gallery-wrap {
+  display: grid;
+  gap: 12px;
+}
+
 .product-gallery {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -814,6 +819,201 @@ p {
 
 .product-gallery img {
   object-fit: cover;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.product-gallery:hover img {
+  transform: scale(1.03);
+}
+
+.product-thumbs {
+  display: flex;
+  gap: 10px;
+}
+
+.product-thumb {
+  padding: 2px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.product-thumb img {
+  display: block;
+  width: 112px;
+  height: 66px;
+  object-fit: cover;
+}
+
+.product-thumb.active,
+.product-thumb:hover {
+  border-color: var(--brand-red);
+  transform: translateY(-1px);
+}
+
+/* Chapter Graphics, Room Schematic & Editorial Motion */
+.chapter-graphic {
+  display: block;
+  width: 112px;
+  height: 40px;
+  color: var(--ink);
+  margin: 14px 0 12px;
+}
+
+.pillar-card-media img {
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.pillar-card:hover .pillar-card-media img {
+  transform: scale(1.04);
+}
+
+.pillar-card-arrow {
+  transition: transform 0.2s ease;
+}
+
+.pillar-card:hover .pillar-card-arrow {
+  transform: translate(3px, -3px);
+}
+
+.studio-diagram-shell {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: clamp(18px, 3vw, 30px);
+}
+
+.studio-diagram-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.studio-tab {
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 9px 15px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.studio-tab:hover {
+  border-color: var(--ink);
+}
+
+.studio-tab.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface);
+}
+
+.studio-diagram-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(20px, 3.5vw, 42px);
+  align-items: center;
+}
+
+.studio-schematic-box {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 12px;
+}
+
+.studio-schematic-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.studio-schematic-copy h3 {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+@keyframes editorial-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes signal-dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes fade-swap {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-animate {
+    animation: editorial-rise 0.48s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .hero-animate-delay {
+    animation-delay: 0.08s;
+  }
+
+  .svg-pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pulse-ring 2.8s ease-in-out infinite;
+  }
+
+  .svg-dash {
+    stroke-dasharray: 5 5;
+    animation: signal-dash 1.8s linear infinite;
+  }
+
+  .fade-swap {
+    animation: fade-swap 0.28s ease-out both;
+  }
+}
+
+@media (max-width: 820px) {
+  .studio-diagram-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .spec-table-wrap {

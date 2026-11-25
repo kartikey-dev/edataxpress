@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ChapterGraphic } from '@/components/chapter-graphic';
 import {
   BUSINESS_PROFILE,
   SERVICES,
@@ -34,7 +35,7 @@ export default function HomePage() {
 
       <section className="hero">
         <div className="container hero-grid">
-          <div>
+          <div className="hero-animate">
             <div className="eyebrow">
               <span className="eyebrow-rule" />
               PUBLICATION · PRINTING · DIGITAL STUDIO · MARKETING
@@ -73,7 +74,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="hero-media">
+          <div className="hero-media hero-animate hero-animate-delay">
             <Image
               src="/images/publishing-studio.webp"
               alt="Publishing specialist reviewing printed page proofs and editorial layouts"
@@ -148,6 +149,7 @@ export default function HomePage() {
                 </div>
                 <h3>{service.title}</h3>
                 <p>{service.summary}</p>
+                <ChapterGraphic slug={service.slug} />
                 <span className="pillar-card-link">
                   Explore chapter <span aria-hidden="true">→</span>
                 </span>

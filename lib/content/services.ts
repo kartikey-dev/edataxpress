@@ -215,8 +215,8 @@ export const SERVICES: readonly ServicePillar[] = [
       'Structured consultation, hardware supply, and room setup for interactive classrooms, training studios, and hybrid presentation spaces.',
     ctaLabel: 'Request a consultation or demo',
     image: {
-      src: '/images/book-finishing.webp',
-      alt: 'Prepared studio and workspace setup for organizational and learning teams',
+      src: '/images/digital-studio-setup.webp',
+      alt: 'Modern digital studio and conference room with large wall-mounted flat panel displays and audio bar',
       stamp: 'CLASSROOMS · STUDIOS · DISPLAYS',
     },
     audience: [

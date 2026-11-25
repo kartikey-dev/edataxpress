@@ -4,6 +4,7 @@ import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { EnquiryForm } from '@/components/enquiry-form';
 import { ProductDetailView } from '@/components/product-detail-view';
+import { StudioRoomDiagram } from '@/components/studio-room-diagram';
 import { getProductBySlug } from '@/lib/content';
 
 vi.mock('next/navigation', () => ({
@@ -37,9 +38,13 @@ describe('SiteHeader & SiteFooter', () => {
     expect(servicesButton).toHaveAttribute('aria-expanded', 'false');
   });
 
-  it('renders verified footer links and established 2017 fact', () => {
+  it('renders verified footer links, email, and established 2017 fact', () => {
     render(<SiteFooter />);
     expect(screen.getByText(/Est\. 2017/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /enquiry@edataxpress\.com/i })).toHaveAttribute(
+      'href',
+      'mailto:enquiry@edataxpress.com',
+    );
     expect(screen.getByRole('link', { name: /Digital Studio Setup/i })).toHaveAttribute(
       'href',
       '/services/digital-studio-setup',
@@ -69,6 +74,23 @@ describe('ProductDetailView', () => {
       'href',
       '/contact?service=digital-studio-setup&product=interactive-flat-panel-65',
     );
+
+    const viewButtons = screen.getAllByRole('button', { name: /View \d+:/i });
+    expect(viewButtons.length).toBe(2);
+    expect(viewButtons[0]).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.click(viewButtons[1]);
+    expect(viewButtons[1]).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('switches Digital Studio room schematic concepts interactively', () => {
+    render(<StudioRoomDiagram />);
+    expect(
+      screen.getByRole('heading', { level: 3, name: 'Interactive Classroom Layout' }),
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('tab', { name: /Training & Recording Studio/i }));
+    expect(
+      screen.getByRole('heading', { level: 3, name: 'Lecture Recording & Training Studio' }),
+    ).toBeInTheDocument();
   });
 
   it('renders grouped specifications table and datasheet download link when verified specs are supplied', () => {

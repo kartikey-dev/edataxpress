@@ -36,7 +36,7 @@ export type BusinessProfile = {
     readonly internshala: string;
   };
   readonly contactChannels: {
-    readonly email: string | undefined;
+    readonly email: string;
     readonly phone: string | undefined;
     readonly whatsappUrl: string | undefined;
   };
@@ -95,7 +95,7 @@ export const BUSINESS_PROFILE: BusinessProfile = {
     internshala: 'https://internshala.com/company/edataxpress-1645567516/',
   },
   contactChannels: {
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || undefined,
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'enquiry@edataxpress.com',
     phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || undefined,
     whatsappUrl: process.env.NEXT_PUBLIC_WHATSAPP_URL || undefined,
   },

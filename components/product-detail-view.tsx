@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Breadcrumbs } from './breadcrumbs';
+import { ProductGallery } from './product-gallery';
 import {
   buildBreadcrumbJsonLd,
   hasConfirmedSpecifications,
@@ -27,7 +27,7 @@ export function ProductDetailView({ product }: { product: ProductDetail }) {
 
       <section className="page-hero">
         <div className="container product-layout">
-          <div>
+          <div className="hero-animate">
             <Breadcrumbs items={breadcrumbs} />
             <div className="eyebrow">
               <span className="eyebrow-rule" />
@@ -51,15 +51,8 @@ export function ProductDetailView({ product }: { product: ProductDetail }) {
             </div>
           </div>
 
-          <div className="product-gallery">
-            <Image
-              src={product.images[0].src}
-              alt={product.images[0].alt}
-              fill
-              priority
-              sizes="(max-width: 820px) 100vw, 46vw"
-            />
-            <span className="page-hero-stamp">65-INCH INTERACTIVE DISPLAY</span>
+          <div className="hero-animate hero-animate-delay">
+            <ProductGallery images={product.images} />
           </div>
         </div>
       </section>

@@ -59,8 +59,12 @@ export const PRODUCTS: readonly ProductDetail[] = [
       'Exact model, configuration options, current approved datasheet, installation scope, and commercial quote are shared upon enquiry.',
     images: [
       {
-        src: '/images/book-finishing.webp',
-        alt: 'Digital studio environment prepared for interactive classroom and presentation deployment',
+        src: '/images/digital-studio-interactive-panel-65.webp',
+        alt: 'Large-format interactive flat panel mounted on a floor stand with side whiteboard wings in a classroom',
+      },
+      {
+        src: '/images/digital-studio-setup.webp',
+        alt: 'Dual large-format displays and conferencing audio bar installed in a modern meeting and studio room',
       },
     ],
     highlights: [

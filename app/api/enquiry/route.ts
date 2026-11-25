@@ -96,7 +96,7 @@ export async function POST(request: Request) {
       ok: true,
       mode: 'staging',
       message:
-        'Enquiry details received in staging mode. Live delivery will activate once the owner confirms the enquiry destination.',
+        'Enquiry details received in staging mode. For direct follow-up, you can also email enquiry@edataxpress.com.',
     },
     { status: 202 },
   );

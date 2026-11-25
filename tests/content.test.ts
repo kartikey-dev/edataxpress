@@ -32,6 +32,7 @@ describe('Business profile & confirmed facts', () => {
     expect(BUSINESS_PROFILE.address.postalCode).toBe('110062');
     expect(BUSINESS_PROFILE.address.full).toContain('Madangir');
     expect(BUSINESS_PROFILE.hours.display).toBe('7:00 am – 11:45 pm');
+    expect(BUSINESS_PROFILE.contactChannels.email).toBe('enquiry@edataxpress.com');
     expect(BUSINESS_PROFILE.coFounder.name).toBe('Ayan Sarkar');
     expect(BUSINESS_PROFILE.coFounder.linkedinUrl).toBe('https://in.linkedin.com/in/dmayan');
     expect(BUSINESS_PROFILE.social.linkedinCompany).toBe(
@@ -137,6 +138,7 @@ describe('Navigation, redirects, and SEO generators', () => {
     const businessLd = buildLocalBusinessJsonLd();
     expect(businessLd['@type']).toBe('LocalBusiness');
     expect(businessLd.foundingDate).toBe('2017');
+    expect(businessLd.email).toBe('enquiry@edataxpress.com');
     expect(businessLd.openingHours).toBe('Mo-Su 07:00-23:45');
 
     const studioService = getServiceBySlug('digital-studio-setup')!;

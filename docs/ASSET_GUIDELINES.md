@@ -36,3 +36,8 @@
 - Digital Studio: interactive display in a real classroom/training environment.
 - Digital Marketing: campaign planning/content/analytics context.
 - IFP 65: front, side, ports, touch use, room context, datasheet.
+
+## Recorded third-party stock & open-license imagery
+
+- `public/images/digital-studio-setup.webp`: Unsplash (`photo-1782406747464-86eb11cf931a`, Unsplash License — commercial use permitted without attribution).
+- `public/images/digital-studio-interactive-panel-65.webp`: Wikimedia Commons (`File:ČBu, Faculty of Science, smartboard 2023 (01).jpg`, Creative Commons CC BY-SA 4.0). Replace with owner-supplied product photography once the exact model/SKU is confirmed.

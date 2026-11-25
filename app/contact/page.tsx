@@ -74,6 +74,15 @@ export default function ContactPage() {
             </a>
 
             <div className="contact-hours">
+              <span>EMAIL ENQUIRIES</span>
+              <strong>
+                <a className="text-link" href={`mailto:${BUSINESS_PROFILE.contactChannels.email}`}>
+                  {BUSINESS_PROFILE.contactChannels.email} <span aria-hidden="true">↗</span>
+                </a>
+              </strong>
+            </div>
+
+            <div className="contact-hours">
               <span>OPEN EVERY DAY</span>
               <strong>{BUSINESS_PROFILE.hours.display}</strong>
             </div>
