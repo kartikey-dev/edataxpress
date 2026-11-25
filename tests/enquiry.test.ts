@@ -55,6 +55,25 @@ describe('Enquiry payload validation', () => {
     if (!oversized.ok) {
       expect(oversized.errors.message).toBeDefined();
     }
+
+    const badPayload = validateEnquiryPayload(null);
+    expect(badPayload.ok).toBe(false);
+
+    const invalidOption = validateEnquiryPayload({
+      name: 'Valid Name',
+      organization: 'O'.repeat(151),
+      email: 'valid@example.com',
+      service: 'invalid-service',
+      product: 'unknown-product',
+      message: 'Valid length message for enquiry verification.',
+      consent: true,
+    });
+    expect(invalidOption.ok).toBe(false);
+    if (!invalidOption.ok) {
+      expect(invalidOption.errors.organization).toBeDefined();
+      expect(invalidOption.errors.service).toBeDefined();
+      expect(invalidOption.errors.product).toBeDefined();
+    }
   });
 
   it('flags honeypot spam submissions', () => {
@@ -181,5 +200,21 @@ describe('Rate limiting & /api/enquiry route', () => {
       }),
     );
     expect(upstreamFailRes.status).toBe(502);
+
+    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Connection refused'));
+    const upstreamThrowRes = await POST(
+      new Request('http://localhost/api/enquiry', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-real-ip': '203.0.113.11' },
+        body: JSON.stringify({
+          name: 'Neha Kapoor',
+          email: 'neha@example.org',
+          service: 'publication',
+          message: 'Requesting editorial layout quote for upcoming textbook series.',
+          consent: true,
+        }),
+      }),
+    );
+    expect(upstreamThrowRes.status).toBe(502);
   });
 });

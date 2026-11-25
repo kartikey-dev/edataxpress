@@ -26,6 +26,15 @@ describe('SiteHeader & SiteFooter', () => {
 
     fireEvent.keyDown(document, { key: 'Escape' });
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+    const servicesButton = screen.getByRole('button', { name: /services/i });
+    expect(servicesButton).toHaveAttribute('aria-expanded', 'false');
+    fireEvent.click(servicesButton);
+    expect(servicesButton).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('link', { name: /All Services Overview/i })).toBeInTheDocument();
+
+    fireEvent.mouseDown(document.body);
+    expect(servicesButton).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('renders verified footer links and established 2017 fact', () => {
@@ -60,6 +69,33 @@ describe('ProductDetailView', () => {
       'href',
       '/contact?service=digital-studio-setup&product=interactive-flat-panel-65',
     );
+  });
+
+  it('renders grouped specifications table and datasheet download link when verified specs are supplied', () => {
+    const baseProduct = getProductBySlug('interactive-flat-panel-65')!;
+    render(
+      <ProductDetailView
+        product={{
+          ...baseProduct,
+          specStatus: 'datasheet-verified',
+          brand: 'ExampleBrand',
+          model: 'IFP-65-TEST',
+          sku: 'SKU-65',
+          datasheetUrl: '/docs/approved-ifp-65.pdf',
+          specifications: [
+            { group: 'Display', label: 'Diagonal Size', value: '65 inches' },
+            { group: 'Warranty', label: 'On-site Support', value: 'As per contract' },
+          ],
+        }}
+      />,
+    );
+
+    expect(screen.getByText(/ExampleBrand · IFP-65-TEST · SKU-65/i)).toBeInTheDocument();
+    expect(screen.getByRole('table')).toBeInTheDocument();
+    expect(screen.getByText('Display — Diagonal Size')).toBeInTheDocument();
+    expect(screen.getByText('65 inches')).toBeInTheDocument();
+    const downloadLink = screen.getByRole('link', { name: /Download approved PDF datasheet/i });
+    expect(downloadLink).toHaveAttribute('href', '/docs/approved-ifp-65.pdf');
   });
 });
 
@@ -129,6 +165,30 @@ describe('EnquiryForm', () => {
 
     await waitFor(() => {
       expect(screen.getByRole('status')).toHaveTextContent(/network error/i);
+    });
+
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          ok: false,
+          errors: { form: 'Upstream enquiry destination is unavailable.' },
+        }),
+        { status: 502, headers: { 'content-type': 'application/json' } },
+      ),
+    );
+    fireEvent.change(screen.getByLabelText(/Organization/i), {
+      target: { value: 'Model School' },
+    });
+    fireEvent.change(screen.getByLabelText(/Phone/i), { target: { value: '+91 98111 22334' } });
+    fireEvent.change(screen.getByLabelText(/Specific hardware/i), {
+      target: { value: 'interactive-flat-panel-65' },
+    });
+    fireEvent.submit(screen.getByRole('button', { name: /Send enquiry/i }).closest('form')!);
+
+    await waitFor(() => {
+      expect(screen.getByRole('status')).toHaveTextContent(
+        /Upstream enquiry destination is unavailable/i,
+      );
     });
   });
 });

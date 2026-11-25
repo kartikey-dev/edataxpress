@@ -3,13 +3,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BUSINESS_PROFILE, PRIMARY_NAV, SERVICE_NAV_ITEMS } from '@/lib/content';
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -19,8 +20,22 @@ export function SiteHeader() {
       }
     }
 
+    function handlePointerDown(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        event.target instanceof Node &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setServicesOpen(false);
+      }
+    }
+
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handlePointerDown);
+    };
   }, []);
 
   function closeAllMenus() {
@@ -62,6 +77,7 @@ export function SiteHeader() {
               return (
                 <div
                   key={item.href}
+                  ref={dropdownRef}
                   className="nav-dropdown"
                   onMouseLeave={() => setServicesOpen(false)}
                 >
