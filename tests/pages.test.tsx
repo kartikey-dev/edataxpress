@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import HomePage from '@/app/page';
@@ -120,5 +122,9 @@ describe('App Router Server Component pages', () => {
     render(<TermsPage />);
     expect(screen.getByRole('heading', { level: 1, name: 'Terms of Use' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Contact page/i })).toHaveAttribute('href', '/contact');
+
+    const layoutSource = readFileSync(resolve(process.cwd(), 'app/layout.tsx'), 'utf8');
+    expect(layoutSource).toContain('suppressHydrationWarning');
+    expect(layoutSource).toContain("viewportFit: 'cover'");
   });
 });

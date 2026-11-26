@@ -28,7 +28,7 @@ export function SiteFooter() {
         </nav>
 
         <div className="footer-bottom">
-          <span>
+          <span suppressHydrationWarning>
             © {new Date().getFullYear()} {BUSINESS_PROFILE.name} · Est.{' '}
             {BUSINESS_PROFILE.foundedYear}
           </span>
