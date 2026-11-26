@@ -45,6 +45,8 @@ describe('SiteHeader & SiteFooter', () => {
     expect(servicesButton).toHaveAttribute('aria-expanded', 'true');
     fireEvent.mouseDown(document.body);
     expect(servicesButton).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByRole('link', { name: /Privacy Policy/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /Terms of Use/i })).not.toBeInTheDocument();
   });
 
   it('renders verified footer links, email, and established 2017 fact', () => {
@@ -54,6 +56,11 @@ describe('SiteHeader & SiteFooter', () => {
       'href',
       'mailto:enquiry@edataxpress.com',
     );
+    expect(screen.getByRole('link', { name: /Privacy Policy/i })).toHaveAttribute(
+      'href',
+      '/privacy-policy',
+    );
+    expect(screen.getByRole('link', { name: /Terms of Use/i })).toHaveAttribute('href', '/terms');
     expect(screen.getByRole('link', { name: /Digital Studio Setup/i })).toHaveAttribute(
       'href',
       '/services/digital-studio-setup',

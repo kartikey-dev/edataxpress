@@ -105,10 +105,7 @@ describe('Interactive Flat Panel 65-inch product model', () => {
 describe('Navigation, redirects, and SEO generators', () => {
   it('exposes clean primary navigation, footer links, and legacy redirects', () => {
     const navHrefs = PRIMARY_NAV.map((item) => item.href);
-    expect(navHrefs).toContain('/');
-    expect(navHrefs).toContain('/about');
-    expect(navHrefs).toContain('/services');
-    expect(navHrefs).toContain('/contact');
+    expect(navHrefs).toEqual(['/', '/about', '/services', '/contact']);
 
     expect(FOOTER_LINKS.some((link) => link.href === '/services/digital-studio-setup')).toBe(true);
     expect(FOOTER_LINKS.some((link) => link.href === '/products/interactive-flat-panel-65')).toBe(
